@@ -2,7 +2,9 @@ package com.mygdx.libgdx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
@@ -70,5 +72,30 @@ public class Utility {
         }
 
         return map;
+    }
+
+    public static void loadTextureAsset(String textureFilenamePath) {
+        if(textureFilenamePath == null)
+            return;
+
+        if(_filePathResolver.resolve(textureFilenamePath).exists()) {
+            _assetManager.setLoader(Texture.class, new TextureLoader(_filePathResolver));
+            _assetManager.load(textureFilenamePath, Texture.class);
+            _assetManager.finishLoadingAsset(textureFilenamePath);
+        } else {
+            Gdx.app.debug(TAG, "Texture does not exist!: "+textureFilenamePath);
+        }
+    }
+
+    public static Texture getTextureAsset(String textureFilenamePath) {
+        Texture texture = null;
+
+        if(_assetManager.isLoaded(textureFilenamePath)) {
+            texture = _assetManager.get(textureFilenamePath, Texture.class);
+        } else {
+            Gdx.app.debug(TAG, "Texture is not loaded: "+textureFilenamePath);
+        }
+
+        return texture;
     }
 }
