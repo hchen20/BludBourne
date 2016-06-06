@@ -185,5 +185,29 @@ public class MainGameScreen extends GameScreen {
             return false;
 
         Rectangle rectangle = null;
+
+        for(MapObject object : mapPortalLayer.getObjects()) {
+            if(object instanceof RectangleMapObject) {
+                rectangle = ((RectangleMapObject)object).getRectangle();
+                if(boundingBox.overlaps(rectangle)) {
+                    String mapName = object.getName();
+                    if(mapName == null)
+                        return false;
+
+                    _mapMgr.setClosestStartPositionFromScaledUnits(_player.getCurrentPosition());
+                    _mapMgr.loadMap(mapName);
+                    _player.init(_mapMgr.getPlayerStartUnitScaled().x,
+                                 _mapMgr.getPlayerStartUnitScaled().y);
+
+                    _mapRenderer.setMap(_mapMgr.getCurrentMap());
+
+                    Gdx.app.debug(TAG, "Portal activated");
+                    return true;
+                }
+
+
+            }
+        }
+        return false;
     }
 }
