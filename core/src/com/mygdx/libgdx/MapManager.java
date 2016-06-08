@@ -28,6 +28,7 @@ public class MapManager {
     private final static String MAP_COLLISION_LAYER = "MAP_COLLISION_LAYER";
     private final static String MAP_SPAWNS_LAYER = "MAP_SPAWNS_LAYER";
     private final static String MAP_PORTAL_LAYER = "MAP_PORTAL_LAYER";
+
     private final static String PLAYER_START = "PLAYER_START";
 
     private Vector2 _playerStartPositionRect;
@@ -93,7 +94,7 @@ public class MapManager {
             Gdx.app.debug(TAG, "No portal layer!");
         }
 
-        _spawnLayer = _currentMap.getLayers().get(MAP_PORTAL_LAYER);
+        _spawnLayer = _currentMap.getLayers().get(MAP_SPAWNS_LAYER);
         if(_spawnLayer == null) {
             Gdx.app.debug(TAG, "No spawn layer!");
         } else {
@@ -150,8 +151,8 @@ public class MapManager {
     }
 
     public void set_closestPlayerStartPositionFromScaledUnit(Vector2 position) {
-        if(UNIT_SCALE <= 0)
-            return;
+        //if(UNIT_SCALE <= 0)
+        //    return;
 
         _convertedUnits.set(position.x/UNIT_SCALE, position.y/UNIT_SCALE);
         setClosestStartPosition((_convertedUnits));
