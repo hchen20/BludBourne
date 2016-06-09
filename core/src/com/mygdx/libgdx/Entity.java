@@ -50,7 +50,7 @@ public class Entity {
         UP, RIGHT, DOWN, LEFT
     }
 
-    public Enity() {
+    public Entity() {
         initEntity();
     }
 

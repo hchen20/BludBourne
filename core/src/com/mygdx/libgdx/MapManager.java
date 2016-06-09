@@ -143,7 +143,7 @@ public class MapManager {
                 float distance = position.dst2(_playerStartPositionRect);
                 if (distance < shortestDistance || shortestDistance == 0) {
                     _closestPlayerStartPosition.set(_playerStartPositionRect);
-                    shortestDistance = distance
+                    shortestDistance = distance;
                 }
             }
         }
