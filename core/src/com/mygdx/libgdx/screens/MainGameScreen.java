@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.libgdx.Entity;
@@ -85,7 +84,7 @@ public class MainGameScreen extends GameScreen {
         _player.update(delta);
         _currentPlayerFrame = _player.getFrame();
 
-        updateportalLayerActivation(_player.boundingBox);
+        updatePortalLayerActivation(_player.boundingBox);
 
         if(!isCollisionWithMapLayer(_player.boundingBox)) {
             _player.setNextPositionToCurrent();
@@ -130,7 +129,7 @@ public class MainGameScreen extends GameScreen {
     }
 
     private void setupViewport(int width, int height) {
-        // Make the viewporta percentage of the total display area
+        // Make the view portal percentage of the total display area
         VIEWPORT.virtualHeight = height;
         VIEWPORT.virtualWidth = width;
 
@@ -153,7 +152,7 @@ public class MainGameScreen extends GameScreen {
             VIEWPORT.viewportHeight = VIEWPORT.physicalHeight;
         } else {
             VIEWPORT.viewportWidth = VIEWPORT.physicalHeight;
-            VIEWPORT.viewportWidth = VIEWPORT.viewportWidth*skewing;
+            VIEWPORT.viewportHeight = VIEWPORT.viewportWidth*skewing;
         }
         
         // Gdx.app.debug()
@@ -178,7 +177,7 @@ public class MainGameScreen extends GameScreen {
         return false;
     }
 
-    private boolean updateportalLayerActivation(Rectangle boundingBox){
+    private boolean updatePortalLayerActivation(Rectangle boundingBox){
         MapLayer mapPortalLayer = _mapMgr.getPortalLayer();
 
         if(mapPortalLayer == null)

@@ -1,5 +1,6 @@
 package com.mygdx.libgdx;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
@@ -23,7 +24,7 @@ public class PlayerController implements InputProcessor {
 
     private static Map<Keys, Boolean> keys = new HashMap<PlayerController.Keys, Boolean>();
     private static Map<Mouse, Boolean> mouseButtons = new HashMap<PlayerController.Mouse, Boolean>();
-    private Vector3 lastMouseCooredinates;
+    private Vector3 lastMouseCoordinates;
 
     // initialize the hashmap for inputs
     static {
@@ -37,7 +38,7 @@ public class PlayerController implements InputProcessor {
     private Entity _player;
 
     public PlayerController(Entity player) {
-        this.lastMouseCooredinates = new Vector3();
+        this.lastMouseCoordinates = new Vector3();
         this._player = player;
     }
 
@@ -64,7 +65,7 @@ public class PlayerController implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         if(keycode == Input.Keys.LEFT || keycode == Input.Keys.A)
-            this.leftRelased();
+            this.leftReleased();
 
         if(keycode == Input.Keys.RIGHT || keycode == Input.Keys.D)
             this.rightReleased();
@@ -88,6 +89,159 @@ public class PlayerController implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(button == Input.Buttons.LEFT || button == Input.Buttons.RIGHT)
+            this.setClickMouseCoordinates(screenX, screenY);
+
+        // Left is selection, right is context menu
+        if(button == Input.Buttons.LEFT) {
+            this.selectMouseButtonPressed(screenX, screenY);
+        }
+
+        if(button == Input.Buttons.RIGHT) {
+            this.doActionMouseButtonPressed(screenX, screenY);
+        }
+
         return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if(button == Input.Buttons.LEFT || button == Input.Buttons.RIGHT)
+            this.setClickMouseCoordinates(screenX, screenY);
+
+        // Left is selection, right is context menu
+        if(button == Input.Buttons.LEFT) {
+            this.selectMouseButtonReleased(screenX, screenY);
+        }
+
+        if(button == Input.Buttons.RIGHT) {
+            this.doActionMouseButtonReleased(screenX, screenY);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
+
+    public void dispose() {
+
+    }
+
+    // Key presses
+    public void leftPressed() {
+        keys.put(Keys.LEFT, true);
+    }
+
+    public void rightPressed() {
+        keys.put(Keys.RIGHT, true);
+    }
+
+    public void downPressed() {
+        keys.put(Keys.DOWN, true);
+    }
+
+    public void upPressed() {
+        keys.put(Keys.UP, true);
+    }
+
+    public void quitPressed() {
+        keys.put(Keys.QUIT, true);
+    }
+
+    public void setClickMouseCoordinates(int x, int y) {
+        lastMouseCoordinates.set(x, y, 0);
+    }
+
+    public void selectMouseButtonPressed(int x, int y) {
+        mouseButtons.put(Mouse.SELECT, true);
+    }
+
+    public void doActionMouseButtonPressed(int x, int y) {
+        mouseButtons.put(Mouse.DOACTION, true);
+    }
+
+    // Key releases
+    public void leftReleased() {
+        keys.put(Keys.LEFT, false);
+    }
+
+    public void rightReleased() {
+        keys.put(Keys.RIGHT, false);
+    }
+
+    public void downReleased() {
+        keys.put(Keys.DOWN, false);
+    }
+
+    public void upReleased() {
+        keys.put(Keys.UP, false);
+    }
+
+    public void quitReleased() {
+        keys.put(Keys.QUIT, false);
+    }
+
+
+    public void selectMouseButtonReleased(int x, int y) {
+        mouseButtons.put(Mouse.SELECT, false);
+    }
+
+    public void doActionMouseButtonReleased(int x, int y) {
+        mouseButtons.put(Mouse.DOACTION, false);
+    }
+
+    public void update(float delta) {
+        processInput(delta);
+    }
+
+    public static void hide() {
+        keys.put(Keys.LEFT, false);
+        keys.put(Keys.UP, false);
+        keys.put(Keys.DOWN, false);
+        keys.put(Keys.RIGHT, false);
+        keys.put(Keys.QUIT, false);
+    }
+
+    private void processInput(float delta) {
+        // Keyboard input
+        if(keys.get(Keys.LEFT)) {
+            _player.calculateNextPosition(Entity.Direction.LEFT, delta);
+            _player.setState(Entity.State.WALKING);
+            _player.setDirection(Entity.Direction.LEFT, delta);
+        } else if(keys.get(Keys.RIGHT)) {
+            _player.calculateNextPosition(Entity.Direction.RIGHT, delta);
+            _player.setState(Entity.State.WALKING);
+            _player.setDirection(Entity.Direction.RIGHT, delta);
+        } else if(keys.get(Keys.UP)) {
+            _player.calculateNextPosition(Entity.Direction.UP, delta);
+            _player.setState(Entity.State.WALKING);
+            _player.setDirection(Entity.Direction.UP, delta);
+        } else if(keys.get(Keys.DOWN)) {
+            _player.calculateNextPosition(Entity.Direction.DOWN, delta);
+            _player.setState(Entity.State.WALKING);
+            _player.setDirection(Entity.Direction.DOWN, delta);
+        } else if(keys.get(Keys.QUIT)) {
+            Gdx.app.exit();
+        } else {
+            _player.setState(Entity.State.IDLE);
+        }
+
+        // Mouse input
+        if(mouseButtons.get(Mouse.SELECT)) {
+            mouseButtons.put(Mouse.SELECT, false);
+        }
     }
 }

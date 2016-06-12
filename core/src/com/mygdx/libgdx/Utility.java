@@ -18,12 +18,12 @@ public class Utility {
 
     private static InternalFileHandleResolver _filePathResolver = new InternalFileHandleResolver();
 
-    public static void unloadAsset(String assetFileNamepath) {
+    public static void unloadAsset(String assetFileNamePath) {
         // once the asset manager is done loading
-        if(_assetManager.isLoaded(assetFileNamepath))
-            _assetManager.unload(assetFileNamepath);
+        if(_assetManager.isLoaded(assetFileNamePath))
+            _assetManager.unload(assetFileNamePath);
         else
-            Gdx.app.debug(TAG, "Asset is not loaded; Nothing to unload:"+assetFileNamepath);
+            Gdx.app.debug(TAG, "Asset is not loaded; Nothing to unload:"+ assetFileNamePath);
     }
 
     public static float loadCompleted() {
