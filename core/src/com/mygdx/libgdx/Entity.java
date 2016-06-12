@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class Entity {
     private static final String TAG = Entity.class.getSimpleName();
     private static final String _defaultSpritePath = "sprites/characters/Warrior.png";
+
 
     private Vector2 _velocity;
     private String _entityID;
@@ -47,12 +49,36 @@ public class Entity {
     public static Rectangle boundingBox;
 
     public enum State {
-        IDLE, WALKING
+        IDLE,
+        WALKING,
+
+        IMMOBILE;
+
+        static public State getRandomNext() {
+            return State.values()[MathUtils.random(State.values().length-2)];
+        }
     }
 
     public enum Direction {
-        UP, RIGHT, DOWN, LEFT
+        UP, RIGHT, DOWN, LEFT;
+
+        static public Direction getRandomNext() {
+            return Direction.values()[MathUtils.random(Direction.values().length-1)];
+        }
+
+        public Direction getOpposite() {
+            if(this == LEFT)
+                return RIGHT;
+            else if(this == RIGHT)
+                return LEFT;
+            else if(this == UP)
+                return DOWN;
+            else
+                return UP;
+        }
     }
+
+
 
     public Entity() {
         initEntity();
