@@ -145,20 +145,21 @@ public class Entity {
                 TextureRegion region = textureFrames[i][j];
                 if(region == null) {
                     Gdx.app.debug(TAG, "Got null animation frame "+i+", "+j);
-                    switch (i) {
-                        case 0:
-                            _walkDownFrames.insert(j, region);
-                            break;
-                        case 1:
-                            _walkLeftFrames.insert(j, region);
-                            break;
-                        case 2:
-                            _walkRightFrames.insert(j, region);
-                            break;
-                        case 3:
-                            _walkUpFrames.insert(j, region);
-                            break;
-                    }
+                }
+
+                switch (i) {
+                    case 0:
+                        _walkDownFrames.insert(j, region);
+                        break;
+                    case 1:
+                        _walkLeftFrames.insert(j, region);
+                        break;
+                    case 2:
+                        _walkRightFrames.insert(j, region);
+                        break;
+                    case 3:
+                        _walkUpFrames.insert(j, region);
+                        break;
                 }
             }
         }
