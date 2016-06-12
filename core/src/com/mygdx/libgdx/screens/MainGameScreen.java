@@ -98,10 +98,10 @@ public class MainGameScreen extends GameScreen {
         _mapRenderer.getBatch().begin();
 
         _mapRenderer.getBatch().draw(_currentPlayerFrame,
-                                           _currentPlayerSprite.getRegionX(),
-                                           _currentPlayerSprite.getY(),
-                                           1,
-                                           1);
+                                     _currentPlayerSprite.getX(),
+                                     _currentPlayerSprite.getY(),
+                                     1,
+                                     1);
         _mapRenderer.getBatch().end();
     }
 

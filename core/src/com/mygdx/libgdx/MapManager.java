@@ -50,7 +50,7 @@ public class MapManager {
         _mapTable = new Hashtable<String, String>();
         _mapTable.put(TOP_WORLD, "maps/topworld.tmx");
         _mapTable.put(TOWN, "maps/town.tmx");
-        _mapTable.put(CASTLE_OF_DOOM, "map/castle_of_doom");
+        _mapTable.put(CASTLE_OF_DOOM, "maps/castle_of_doom.tmx");
 
         _playerStartLocationTable = new Hashtable<String, Vector2>();
         _playerStartLocationTable.put(TOP_WORLD, _playerStart.cpy());
