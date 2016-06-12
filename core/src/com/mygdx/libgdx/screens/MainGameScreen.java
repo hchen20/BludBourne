@@ -53,7 +53,7 @@ public class MainGameScreen extends GameScreen {
         _camera = new OrthographicCamera();
         _camera.setToOrtho(false, VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
 
-        _mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCuurentMap(), MapManager.UNIT_SCALE);
+        _mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentMap(), MapManager.UNIT_SCALE);
         _mapRenderer.setView(_camera);
 
         Gdx.app.debug(TAG, "UnitScale value is: "+_mapRenderer.getUnitScale());
@@ -142,17 +142,17 @@ public class MainGameScreen extends GameScreen {
         VIEWPORT.physicalHeight = Gdx.graphics.getHeight();
 
         // Aspect ratio for current viewport
-        VIEWPORT.aspectRatio = (VIEWPORT.viewportWidth/VIEWPORT.virtualHeight);
+        VIEWPORT.aspectRatio = (VIEWPORT.virtualWidth/VIEWPORT.virtualHeight);
 
         // Update viewport if there could be skewing
-        float skewing = VIEWPORT.physicalHeight/VIEWPORT.physicalWidth;
-        if(skewing >= VIEWPORT.aspectRatio) {
+        float skewing = VIEWPORT.physicalWidth/VIEWPORT.physicalHeight;
+        if(VIEWPORT.physicalWidth / VIEWPORT.physicalHeight >= VIEWPORT.aspectRatio) {
             // Letterbox left and right
-            VIEWPORT.viewportWidth = VIEWPORT.viewportHeight*skewing;
-            VIEWPORT.viewportHeight = VIEWPORT.physicalHeight;
+            VIEWPORT.viewportWidth = VIEWPORT.viewportHeight * (VIEWPORT.physicalWidth/VIEWPORT.physicalHeight);
+            VIEWPORT.viewportHeight = VIEWPORT.virtualHeight;
         } else {
-            VIEWPORT.viewportWidth = VIEWPORT.physicalHeight;
-            VIEWPORT.viewportHeight = VIEWPORT.viewportWidth*skewing;
+            VIEWPORT.viewportWidth = VIEWPORT.virtualWidth;
+            VIEWPORT.viewportHeight = VIEWPORT.viewportWidth * (VIEWPORT.physicalHeight/VIEWPORT.physicalWidth);
         }
         
         // Gdx.app.debug()

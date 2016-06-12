@@ -22,22 +22,26 @@ public class PlayerController implements InputProcessor {
         SELECT, DOACTION
     }
 
-    private static Map<Keys, Boolean> keys = new HashMap<PlayerController.Keys, Boolean>();
-    private static Map<Mouse, Boolean> mouseButtons = new HashMap<PlayerController.Mouse, Boolean>();
+    private static Map<Keys, Boolean> keys;
+    private static Map<Mouse, Boolean> mouseButtons;
     private Vector3 lastMouseCoordinates;
 
     // initialize the hashmap for inputs
-    static {
+
+
+    private Entity _player;
+
+    public PlayerController(Entity player) {
+        mouseButtons = new HashMap<PlayerController.Mouse, Boolean>();
+        keys = new HashMap<PlayerController.Keys, Boolean>();
+        // initialize the hashmap for inputs
         keys.put(Keys.LEFT, false);
         keys.put(Keys.UP, false);
         keys.put(Keys.DOWN, false);
         keys.put(Keys.RIGHT, false);
         keys.put(Keys.QUIT, false);
-    }
-
-    private Entity _player;
-
-    public PlayerController(Entity player) {
+        mouseButtons.put(Mouse.DOACTION, false);
+        mouseButtons.put(Mouse.SELECT, false);
         this.lastMouseCoordinates = new Vector3();
         this._player = player;
     }
