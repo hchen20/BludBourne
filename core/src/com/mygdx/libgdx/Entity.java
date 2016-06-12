@@ -90,6 +90,15 @@ public class Entity {
         }
     }
 
+    public static enum AnimationType {
+        WALK_LEFT,
+        WALK_RIGHT,
+        WALK_UP,
+        WALK_DOWN,
+        IDLE,
+        IMMOBILE
+    }
+
     public Entity(InputComponent inputComponent,
                   PhysicsComponent physicsComponent,
                   GraphicsComponent graphicsComponent) {

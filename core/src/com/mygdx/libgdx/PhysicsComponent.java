@@ -23,7 +23,7 @@ public abstract class PhysicsComponent implements Component {
     }
 
     protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr) {
-        Array<Entity> entities = mapMgr.getCurrentEntities();
+        Array<Entity> entities = mapMgr.getCurrentMapEntities();
         boolean isCollisionWithMapEntities = false;
 
         for (Entity mapEntity : entities) {

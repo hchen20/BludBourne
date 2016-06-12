@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.Hashtable;
 
@@ -156,5 +157,9 @@ public class MapManager {
 
         _convertedUnits.set(position.x/UNIT_SCALE, position.y/UNIT_SCALE);
         setClosestStartPosition((_convertedUnits));
+    }
+
+    public final Array<Entity> getCurrentMapEntities() {
+        return _currentMap.getMapEntities();
     }
 }
