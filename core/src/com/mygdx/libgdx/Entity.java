@@ -46,8 +46,8 @@ public class Entity {
     protected Sprite _frameSprite = null;
     protected TextureRegion _currentFrame = null;
 
-    public final int FRAME_WIDTH = 16;
-    public final int FRAME_HEIGHT = 16;
+    public final static int FRAME_WIDTH = 16;
+    public final static int FRAME_HEIGHT = 16;
     public static Rectangle boundingBox;
 
     private static final int MAX_COMPONENTS = 5;
