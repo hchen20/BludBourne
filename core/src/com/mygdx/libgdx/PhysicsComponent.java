@@ -40,7 +40,7 @@ public abstract class PhysicsComponent implements Component {
 
     PhysicsComponent() {
         this._nextEntityPosition = new Vector2(0,0);
-        this._currentEntityPosition new Vector2(0, 0);
+        this._currentEntityPosition = new Vector2(0, 0);
         this._velocity = new Vector2(2f, 2f);
         this._boundingBox = new Rectangle();
         this._json = new Json();
@@ -154,7 +154,7 @@ public abstract class PhysicsComponent implements Component {
         float height;
 
         float origWidth = Entity.FRAME_WIDTH;
-        float origHeight = Entity.FRAME_HEIGHT
+        float origHeight = Entity.FRAME_HEIGHT;
 
         float widthReductionAmount = 1.0f - percentageWidthReduced;
         float heightReductionAmount = 1.0f - percentageHeightReduced;
@@ -197,6 +197,32 @@ public abstract class PhysicsComponent implements Component {
                 break;
             case CENTER:
                 _boundingBox.setCenter(minX+origWidth/2, minY+origHeight/2);
+                break;
+        }
+    }
+
+    protected void updateBoundingBoxPosition(Vector2 position) {
+        // Need to account for the unit scale, since the map coordinates will be in pixels
+        float minX;
+        float minY;
+
+        if (MapManager.UNIT_SCALE > 0) {
+            minX = position.x / MapManager.UNIT_SCALE;
+            minY = position.y / MapManager.UNIT_SCALE;
+        } else {
+            minX = position.x;
+            minY = position.y;
+        }
+
+        switch (_boundingBoxLocation) {
+            case BOTTOM_LEFT:
+                _boundingBox.set(minX, minY, _boundingBox.getWidth(), _boundingBox.getHeight());
+                break;
+            case BOTTOM_CENTER:
+                _boundingBox.setCenter(minX+Entity.FRAME_WIDTH/2, minY+Entity.FRAME_HEIGHT/4);
+                break;
+            case CENTER:
+                _boundingBox.setCenter(minX+Entity.FRAME_WIDTH/2, minY+Entity.FRAME_HEIGHT/4);
                 break;
         }
     }
