@@ -271,7 +271,7 @@ public abstract class Map {
     }
 
     public MapLayer getCollisionLayer() {
-        return _collisionLayer
+        return _collisionLayer;
     }
 
     public MapLayer getPortalLayer() {
